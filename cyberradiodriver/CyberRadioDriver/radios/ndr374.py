@@ -53,8 +53,10 @@ class ndr374_wbddc(ndr551_wbddc):
         14  :61.44e6,
         15  :73.6e6,
         16  :92.16e6,
-        17  :122.88e6,
-        18  :147.2e6,
+        17  :100e6,
+        18  :122.88e6,
+        19  :147.2e6,
+
     }
     bwSet = {
         0   :1.25e6,
@@ -74,9 +76,44 @@ class ndr374_wbddc(ndr551_wbddc):
         14  :40e6,
         15  :62.5e6,
         16  :73.728e6,
-        17  :93.804e6,
-        18  :125e6,
+        17  :80e6,
+        18  :98.304e6,
+        19  :125e6,
+
     }
+    sampleSizeSet = {
+       0   : 1152,
+       1   : 1152,
+       2   : 1152,
+       3   : 1152,
+       4   : 1000,
+       5   : 1000,
+       6   : 1152,
+       7   : 1152,
+       8   : 1000,
+       9   : 1000,
+       10  : 1152,
+       11  : 1100,
+       12  : 1152,
+       13  : 1000,
+       14  : 1152,
+       15  : 1000,
+       16  : 1152,
+       17  : 1250,
+       18  : 1152,
+       19  : 1000,
+    }
+
+    def getRateAndBwSet(self, ):
+        ret = {}
+        for i in range(0,20):
+            ret[i] = (ndr374_wbddc.rateSet.get(i),ndr374_wbddc.bwSet.get(i),ndr374_wbddc.sampleSizeSet.get(i))
+        return ret
+
+    def getRateAndBw(self, index):
+        return {"rate": ndr374_wbddc.rateSet.get(index),
+                "bw": ndr374_wbddc.bwSet.get(index),
+                "samples": ndr374_wbddc.sampleSizeSet.get(index)}
 
 
 
@@ -115,6 +152,21 @@ class ndr374_nbddc(ndr551_nbddc):
         10  :1600e3,
         11  :2560e3,
         12  :3200e3,
+    }
+    sampleSizeSet = {
+       0   : 100,
+       1   : 100,
+       2   : 100,
+       3   : 1000,
+       4   : 1000,
+       5   : 1000,
+       6   : 1000,
+       7   : 1000,
+       8   : 1000,
+       9   : 1000,
+       10  : 1000,
+       11  : 1000,
+       12  : 1000,
     }
 
 ##
@@ -317,5 +369,16 @@ class ndr374(ndr551):
     wbddcType = ndr374_wbddc
     numWbddc = 4
     nbddcType = ndr374_nbddc
+    numNbddc = 32
+    numGigE = 2
     cddcGroupType = None
 
+
+    # def getWbddcRateSet(self, index=None):
+    #     ret = {}
+    #     try:
+    #         firstIndex = self.getWbddcIndexRange()[0]
+    #         ret = self.wbddcDict[firstIndex if index is None else index].getRateAndBwSet()
+    #     except:
+    #         pass
+    #     return ret

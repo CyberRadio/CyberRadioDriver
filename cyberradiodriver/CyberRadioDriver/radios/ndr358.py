@@ -18,6 +18,7 @@ from CyberRadioDriver.radios.ndr551 import  ndr551, \
                                             ndr551_ddc_ifSpec, \
                                             ndr551_adc_ifSpec, \
                                             ndr551_demod_ifSpec
+from CyberRadioDriver.components import _tuner, adjustFrequency, adjustAttenuation
 from CyberRadioDriver.command import _jsonCommandBase, jsonConfig
 from CyberRadioDriver import configKeys
 # Imports from external modules
@@ -286,6 +287,148 @@ class ndr358(ndr551):
     numWbddc = 8
     nbddcType = ndr358_nbddc
     cddcGroupType = ndr358_ddc_group
+
+
+class tuner358_13(_jsonCommandBase):
+    mnemonic = "catuner"
+    queryParamMap = {
+                configKeys.TUNER_INDEX: "id",
+                configKeys.TUNER_PRESELECT_BYPASS: "prebypass",
+                configKeys.TUNER_FREQUENCY: "freq",
+                configKeys.TUNER_ATTENUATION: "atten",
+                configKeys.TUNER_IF_FILTER: "if",
+                configKeys.TUNER_FNR: "fnr",
+                configKeys.TUNER_GAIN_MODE: "mode",
+                }
+    setParamMap = {
+                configKeys.TUNER_INDEX: "id",
+                configKeys.TUNER_PRESELECT_BYPASS: "prebypass",
+                configKeys.TUNER_FREQUENCY: "freq",
+                configKeys.TUNER_ATTENUATION: "atten",
+                configKeys.TUNER_IF_FILTER: "if",
+                configKeys.TUNER_FNR: "fnr",
+                configKeys.TUNER_GAIN_MODE: "mode",
+                }
+
+
+##
+# Tuner component class for the NDR358-13.
+#
+class ndr358_13_tuner(_tuner):
+    _name = "Tuner(NDR358-13)"
+    frqRange = (20e6, 6e9)
+    frqRes = 1e6
+    frqUnits = 1
+    attRange = (0.0, 40.0)
+    attRes = 1.0
+    ifFilters = [3, 10, 40, 80]
+    agc = False
+    # The NDR551 has one tuner command that sets all tuner parameters.
+    frqCmd = tuner358_13
+    attCmd = tuner358_13
+    tpwrCmd = None
+    # Override default port
+    defaultPort = 19091
+    # OVERRIDE
+    ##
+    # The list of valid configuration keywords supported by this
+    # object.  Override in derived classes as needed.
+    validConfigurationKeywords = [
+        configKeys.TUNER_FREQUENCY,
+        configKeys.TUNER_ATTENUATION,
+        configKeys.TUNER_IF_FILTER,
+        configKeys.TUNER_FNR,
+        configKeys.TUNER_GAIN_MODE,
+        configKeys.TUNER_PRESELECT_BYPASS,
+    ]
+
+    def __init__(self, *args, **kwargs):
+        _tuner.__init__(self, *args, **kwargs)
+
+    # OVERRIDE
+    ##
+    # \protected
+    # Queries hardware to determine the object's current configuration.
+    def _queryConfiguration(self):
+        # Call the base-class implementation
+        configKeys.Configurable._queryConfiguration(self)
+        # Override
+        if self.frqCmd is not None:
+            cmd = self.frqCmd(**{"parent": self,
+                                 configKeys.TUNER_INDEX: self.index,
+                                 "query": True,
+                                 "verbose": self.verbose,
+                                 "logFile": self.logFile})
+            cmd.send(self.callback, )
+            self._addLastCommandErrorInfo(cmd)
+            rspInfo = cmd.getResponseInfo()
+            if rspInfo is not None:
+                for key in self.validConfigurationKeywords:
+                    val = rspInfo.get(key, None)
+                    if val is not None:
+                        self.configuration[key] = val
+        pass
+
+    # OVERRIDE
+    ##
+    # \protected
+    # Issues hardware commands to set the object's current configuration.
+    def _setConfiguration(self, confDict):
+        #print("_setConfiguration - 358-13")
+        ret = True
+        if self.frqCmd is not None:
+            cDict = {"parent": self,
+                     configKeys.TUNER_INDEX: self.index,
+                     "verbose": self.verbose,
+                     "logFile": self.logFile}
+            for key in [configKeys.ENABLE,
+                        configKeys.TUNER_IF_FILTER,
+                        configKeys.TUNER_FNR,
+                        configKeys.TUNER_GAIN_MODE,
+                        configKeys.TUNER_DELAY,
+                        configKeys.TUNER_PRESELECT_BYPASS,
+                        ]:
+                if key in confDict:
+                    cDict[key] = confDict[key]
+            if configKeys.TUNER_FREQUENCY in confDict:
+                freqIn = float(confDict.get(configKeys.TUNER_FREQUENCY, 0))
+                freqAdj = adjustFrequency(freqIn, self.frqRange,
+                                          self.frqRes, self.frqUnits)
+                cDict[configKeys.TUNER_FREQUENCY] = freqAdj
+            if configKeys.TUNER_ATTENUATION in confDict or configKeys.TUNER_RF_ATTENUATION in confDict:
+                rfAttIn = float(confDict.get(configKeys.TUNER_RF_ATTENUATION,
+                                             confDict.get(configKeys.TUNER_ATTENUATION, 0)))
+                rfAttAdj = adjustAttenuation(rfAttIn, self.attRange,
+                                             self.attRes, 1)
+                cDict[configKeys.TUNER_ATTENUATION] = rfAttAdj
+            cmd = self.frqCmd(**cDict)
+            ret &= cmd.send(self.callback, )
+            ret &= cmd.success
+            self._addLastCommandErrorInfo(cmd)
+            if ret:
+                if configKeys.TUNER_FREQUENCY in confDict:
+                    self.configuration[configKeys.TUNER_FREQUENCY] = freqAdj * self.frqUnits
+                if configKeys.TUNER_ATTENUATION in confDict or configKeys.TUNER_RF_ATTENUATION in confDict:
+                    self.configuration[configKeys.TUNER_ATTENUATION] = rfAttAdj
+                    self.configuration[configKeys.TUNER_RF_ATTENUATION] = rfAttAdj
+                for key in [configKeys.ENABLE,
+                            configKeys.TUNER_IF_FILTER,
+                            configKeys.TUNER_FNR,
+                            configKeys.TUNER_GAIN_MODE,
+                            configKeys.TUNER_DELAY,
+                            configKeys.TUNER_PRESELECT_BYPASS,
+                            ]:
+                    if key in confDict:
+                        self.configuration[key] = confDict[key]
+            pass
+        return ret
+
+
+class ndr358_13(ndr358):
+    _name = "NDR358-13"
+    numGigE = 0
+    tunerType = ndr358_13_tuner
+    connectionModes = ["udp"]
 
 
 class ndr358_coherent(ndr358):

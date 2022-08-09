@@ -55,7 +55,7 @@ def SEND_DATA(data):
 #
 def RECV_DATA(data):
     if sys.version_info >= (3,):
-        return data.decode("ascii")
+        return data.decode("ascii","ignore")
     else:
         return data
 

@@ -23,7 +23,7 @@
 # \author NH
 # \author DA
 # \author MN
-# \copyright Copyright (c) 2014-2021 CyberRadio Solutions, Inc.
+# \copyright Copyright (c) 2014-2022 CyberRadio Solutions, Inc.
 #    All rights reserved.
 #
 ###############################################################
@@ -63,6 +63,8 @@
 #    <tr><td>\link CyberRadioDriver::radios::ndr308::ndr308_ts NDR308-TS \endlink</td><td>"ndr308ts"</td></tr>
 #    <tr><td>\link CyberRadioDriver::radios::ndr308::ndr308 NDR308 \endlink</td><td>"ndr308"</td></tr>
 #    <tr><td>\link CyberRadioDriver::radios::ndr308::ndr308_4 NDR308 4-tuner \endlink</td><td>"ndr308_4"</td></tr>
+#    <tr><td>\link CyberRadioDriver::radios::ndr318::ndr318 NDR318 \endlink</td><td>"ndr318"</td></tr>
+#    <tr><td>\link CyberRadioDriver::radios::ndr318::ndr318a NDR318A \endlink</td><td>"ndr318a"</td></tr>
 #    <tr><td>\link CyberRadioDriver::radios::internal::ndr328::ndr328 NDR328 \endlink</td><td>"ndr328"</td></tr>
 #    <tr><td>\link CyberRadioDriver::radios::internal::ndr354::ndr354 NDR354 \endlink</td><td>"ndr354"</td></tr>
 #    <tr><td>\link CyberRadioDriver::radios::internal::ndr357::ndr357 NDR357 \endlink</td><td>"ndr357"</td></tr>
@@ -109,7 +111,7 @@ name = "CyberRadioDriver"
 description = "CyberRadio Solutions NDR Driver"
 ##
 # \brief Driver version number (string).
-version = "21.10.17"
+version = "22.07.26"
 
 # # This section of code inspects the "radio" module for radio handler
 # # objects (objects derived from _radio, thus implementing the IRadio interface)

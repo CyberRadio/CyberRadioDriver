@@ -948,6 +948,7 @@ class idn(_commandBase):
 # <li> "softwareVersion": application version number
 # <li> "firmwareVersion": FPGA software version number
 # <li> "referenceVersion": Reference/timing version number
+# <li> "model": Radio model
 # </ul>
 #
 class ver(_commandBase):
@@ -959,6 +960,8 @@ class ver(_commandBase):
     # Parses the command response into the response information dictionary.
     def parseResponse(self):
         self.responseInfo = {}
+        isNdr318 = False
+        processingFpga = False
         if self.rsp is not None:
             for rspLine in self.rsp:
                 # Ignore lines that echo back the query command
@@ -968,6 +971,10 @@ class ver(_commandBase):
                 elif any([q in rspLine.upper() for q in ["OK", "ERROR", "TIMEOUT", "EXCEPTION"]]):
                     continue
                 # Start response parsing
+                if "Unit Configuration: NDR318" in rspLine:
+                    isNdr318 = True
+                if "FPGA" in rspLine:
+                    processingFpga = True
                 if "REV: " in rspLine:
                     self.responseInfo["softwareVersion"] = rspLine.replace("REV: ", "")
                 if "Rev: " in rspLine:
@@ -983,8 +990,14 @@ class ver(_commandBase):
                     self.responseInfo["softwareVersion"] = rspLine.replace("NDR301PTT Version: ", "")
                 if "FPGA Revision: " in rspLine:
                     self.responseInfo["firmwareVersion"] = rspLine.replace("FPGA Revision: ", "")
-    
-    
+                if isNdr318 and processingFpga:
+                    if "ID : 318A" in rspLine or \
+                       "SP ID : 6C28" in rspLine:
+                        self.responseInfo["model"] = "NDR318A"
+                    if "REV : " in rspLine:
+                        self.responseInfo["firmwareVersion"] = rspLine.replace("REV : ", "")
+
+
 #--  Hardware Revision Command  ---------------------------------------------#
 
 ##

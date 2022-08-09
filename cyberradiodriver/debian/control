@@ -26,6 +26,7 @@ Depends: DEB_PYTHON_PKG_DEP,
          DEB_PYTHON_PKG_PREFIX-numpy, 
          DEB_PYTHON_PKG_PREFIX-serial, 
          DEB_PYTHON_PKG_PREFIX-requests (>= 2.9.1)
+Suggests: cyberradiodriver-doc (= DEB_PKG_VERSION)
 Replaces: pyndrdriver, cyberradiodriver, python-cyberradiodriver
 Description: CyberRadio Solutions, Inc., NDR-series Radio Control Driver
  Provides a unified driver for controlling all NDR-series radios from

@@ -292,5 +292,8 @@ class ndr357_coherent(ndr357):
     _name = "NDR357-Coherent"
     numWbddc = 8
 
+class ndr357_2(ndr357):
+    _name = "NDR357-2"
+
 if __name__ == '__main__':
     pass

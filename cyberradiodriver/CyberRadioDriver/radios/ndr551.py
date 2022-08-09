@@ -1408,6 +1408,9 @@ class ndr551(_radio):
         return cmd.success, rspInfo
 
     
+class ndr551_3(ndr551):
+    _name = "NDR551-3"
+
 
 if __name__ == '__main__':
     pass

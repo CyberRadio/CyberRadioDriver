@@ -8,6 +8,12 @@ to communicate with NDR-class radios.
 On any system where the CyberRadio Driver package is installed, you can 
 find the documentation at `/usr/share/doc/CyberRadioDriver/html`.
 
+## Dependencies
+
+- python[3]-serial
+- python[3]-numpy
+- python[3]-requests
+
 ### Building the Package
     
     # Setup in the local python2

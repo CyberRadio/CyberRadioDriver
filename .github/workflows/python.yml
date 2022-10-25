@@ -18,7 +18,7 @@ jobs:
     - name: Save Debian Archive
       uses: actions/upload-artifact@v3
       with:
-        name: python3-cyberradiodriver
+        name: python3-cyberradiodriver-jammy
         path: ./*.deb
   build-ubuntu20-04:
     runs-on: ubuntu-20.04
@@ -33,7 +33,7 @@ jobs:
     - name: Save Debian Archive
       uses: actions/upload-artifact@v3
       with:
-        name: python3-cyberradiodriver
+        name: python3-cyberradiodriver-focal
         path: ./*.deb
   build-ubuntu18-04-py3:
     runs-on: ubuntu-18.04
@@ -48,7 +48,7 @@ jobs:
     - name: Save Debian Archive
       uses: actions/upload-artifact@v3
       with:
-        name: python3-cyberradiodriver
+        name: python3-cyberradiodriver-bionic
         path: ./*.deb
   build-ubuntu18-04-py2:
     runs-on: ubuntu-18.04
@@ -63,5 +63,5 @@ jobs:
     - name: Save Debian Archive
       uses: actions/upload-artifact@v3
       with:
-        name: python3-cyberradiodriver
-        path: ./*.deb
+        name: python3-cyberradiodriver-bionic
+        path: ./*.deb2

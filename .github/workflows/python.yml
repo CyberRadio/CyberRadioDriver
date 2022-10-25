@@ -44,7 +44,7 @@ jobs:
     - name: Install Package Deps
       run: sudo apt-get install build-essential devscripts debhelper doxygen dh-python cmake
     - name: Build and Package
-      run: ./makedeb cyberradiodriver
+      run: ./makedeb -3 cyberradiodriver
     - name: Save Debian Archive
       uses: actions/upload-artifact@v3
       with:

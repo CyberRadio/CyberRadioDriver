@@ -20,3 +20,48 @@ jobs:
       with:
         name: python3-cyberradiodriver
         path: ./*.deb
+  build-ubuntu20-04:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Environment
+      run: sudo apt-get install -y python3-serial python3-netifaces python3-numpy python3-requests
+    - name: Install Package Deps
+      run: sudo apt-get install build-essential devscripts debhelper doxygen dh-python cmake
+    - name: Build and Package
+      run: ./makedeb cyberradiodriver
+    - name: Save Debian Archive
+      uses: actions/upload-artifact@v3
+      with:
+        name: python3-cyberradiodriver
+        path: ./*.deb
+  build-ubuntu18-04-py3:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Environment
+      run: sudo apt-get install -y python3 python3-serial python3-netifaces python3-numpy python3-requests
+    - name: Install Package Deps
+      run: sudo apt-get install build-essential devscripts debhelper doxygen dh-python cmake
+    - name: Build and Package
+      run: ./makedeb cyberradiodriver
+    - name: Save Debian Archive
+      uses: actions/upload-artifact@v3
+      with:
+        name: python3-cyberradiodriver
+        path: ./*.deb
+  build-ubuntu18-04-py2:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Environment
+      run: sudo apt-get install -y python-serial python-netifaces python-numpy python-requests
+    - name: Install Package Deps
+      run: sudo apt-get install build-essential devscripts debhelper doxygen dh-python cmake
+    - name: Build and Package
+      run: ./makedeb -2 cyberradiodriver
+    - name: Save Debian Archive
+      uses: actions/upload-artifact@v3
+      with:
+        name: python3-cyberradiodriver
+        path: ./*.deb

@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Setup Environment
-      run: apt-get install -y python3-serial python3-netifaces python3-numpy python3-requests
+      run: sudo apt-get install -y python3-serial python3-netifaces python3-numpy python3-requests
     - name: Build and Package
       run: ./makedeb cyberradiodriver
     - name: Save Debian Archive

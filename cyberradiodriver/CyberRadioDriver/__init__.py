@@ -111,7 +111,7 @@ name = "CyberRadioDriver"
 description = "CyberRadio Solutions NDR Driver"
 ##
 # \brief Driver version number (string).
-version = "22.07.26"
+version = "22.10.27"
 
 # # This section of code inspects the "radio" module for radio handler
 # # objects (objects derived from _radio, thus implementing the IRadio interface)

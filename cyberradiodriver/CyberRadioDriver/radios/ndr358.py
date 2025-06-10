@@ -1536,7 +1536,110 @@ class ndr358_altrx1(ndr358):
             "wbddc": ndr358_altrx1_wbddc_ifSpec,
             "nbddc": ndr358_altrx1_nbddc_ifSpec,
         }
-    
+
+
+##
+# \brief WBDDC component class for the NDR358 Resampler variant.
+class ndr358_resampler_wbddc(ndr358_wbddc):
+    _name = "WBDDC(NDR358-Resampler)"
+    # OVERRIDES
+    rateSet = {
+            41: 125e6
+        }
+    bwSet = {
+            41: 80e6
+        }
+    validConfigurationKeywords = [
+            configKeys.DDC_RF_INDEX,
+            configKeys.DDC_OUTPUT_TYPE,
+            configKeys.DDC_FREQUENCY_OFFSET,
+            configKeys.DDC_RATE_INDEX,
+            configKeys.ENABLE,
+            configKeys.DDC_GROUP_ID,
+            configKeys.DDC_STREAM_ID,
+            configKeys.DDC_LINK,
+            configKeys.DDC_UDP_DESTINATION,
+            configKeys.DDC_DGC_MODE,
+            configKeys.DDC_DGC_GAIN,
+            configKeys.DDC_DGC_UPPER_LIMIT,
+            configKeys.DDC_DGC_LOWER_LIMIT,
+            configKeys.DDC_DGC_TARGET_RANGE,
+            configKeys.DDC_DGC_ATTACK_LIMIT,
+            configKeys.DDC_DGC_DECAY_LIMIT,
+            configKeys.DDC_DGC_ATTACK_OFFSET,
+            configKeys.DDC_DGC_DECAY_OFFSET,
+            configKeys.DDC_DGC_ATTACK_TIME,
+            configKeys.DDC_DGC_DECAY_TIME,
+            configKeys.DDC_DGC_ATTACK_TRIGGER,
+            configKeys.DDC_DGC_DECAY_TRIGGER,
+        ]
+
+##
+# \brief WBDDC component class for the NDR358 Resampler variant.
+class ndr358_resampler_nbddc(ndr358_nbddc):
+    _name = "NBDDC(NDR358-Resampler)"
+    # OVERRIDES
+    rateSet = {
+            17: 6.25e6,
+            18: 12.25e6,
+            19: 25e6,
+        }
+    bwSet = {
+            17: 5e6,
+            18: 10e6,
+            19: 20e6,
+        }
+
+##
+# Reference mode command specific to the NDR551.
+#
+class ndr358_9_ref(_jsonCommandBase):
+    mnemonic = "ref"
+    queryParamMap = {
+            configKeys.REFERENCE_MODE: "cfg10m",
+            configKeys.STATUS_PPS_SOURCE: "cfg1pps",
+            configKeys.TIME_UTC: "timeset",
+            configKeys.REFERENCE_SYNC: "sync",
+            configKeys.NOISE_STATE: "nstate"
+        }
+    setParamMap = {
+            configKeys.REFERENCE_MODE: "cfg10m",
+            configKeys.STATUS_PPS_SOURCE: "cfg1pps",
+            configKeys.TIME_UTC: "timeset",
+            configKeys.REFERENCE_SYNC: "sync",
+            configKeys.NOISE_STATE: "nstate"
+        }
+
+
+class ndr358_9(ndr358):
+    _name = "NDR358-9"
+    wbddcType = ndr358_wbddc
+    nbddcType = ndr358_nbddc
+    refCmd = ndr358_9_ref
+    validConfigurationKeywords = [configKeys.CONFIG_MODE,
+                                  configKeys.REFERENCE_MODE,
+                                  configKeys.BYPASS_MODE,
+                                  configKeys.CALIB_FREQUENCY,
+                                  configKeys.FNR_MODE,
+                                  configKeys.GPS_ENABLE,
+                                  configKeys.REF_TUNING_VOLT,
+                                  configKeys.GIGE_FLOW_CONTROL,
+                                  configKeys.RADIO_FUNCTION,
+                                  configKeys.STATUS_PPS_SOURCE,
+                                  configKeys.REFERENCE_SYNC
+                                 ]
+
+class ndr358_9_resampler(ndr358_9):
+    _name = "NDR358-9-Resampler"
+    wbddcType = ndr358_resampler_wbddc
+    nbddcType = ndr358_resampler_nbddc
+    ifSpec = ndr358_ddc_ifSpec
+    ifSpecMap = {
+            "ddc": ndr358_ddc_ifSpec,
+            "adc": ndr358_ddc_ifSpec,
+            "demod": ndr358_demod_ifSpec,
+        }
+
     
 if __name__ == '__main__':
     pass

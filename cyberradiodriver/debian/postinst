@@ -19,7 +19,7 @@
 find_python_module_install_dir()
 {
 	# $1 == Name of Python module to look for
-	python -c "from __future__ import print_function; import sys, os, $1; print(os.path.split(sys.modules['$1'].__file__)[0])"
+	/usr/bin/env python3 -c "from __future__ import print_function; import sys, os, $1; print(os.path.split(sys.modules['$1'].__file__)[0])"
 }
 
 if [ "$1" == "configure" ]

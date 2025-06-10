@@ -49,6 +49,8 @@ VERINFO_HW = "hardwareVersion"
 CONFIG_MODE = "configMode"
 ## Reference mode.
 REFERENCE_MODE = "referenceMode"
+## Reference Sync
+REFERENCE_SYNC = "referenceSync"
 ## Noise State
 NOISE_STATE = "noiseState"
 ## Noise generator selection

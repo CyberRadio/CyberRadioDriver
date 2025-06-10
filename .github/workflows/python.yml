@@ -16,7 +16,7 @@ jobs:
     - name: Build and Package
       run: ./makedeb cyberradiodriver
     - name: Save Debian Archive
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: python3-cyberradiodriver-nobel
         path: ./*.deb
@@ -31,7 +31,7 @@ jobs:
     - name: Build and Package
       run: ./makedeb cyberradiodriver
     - name: Save Debian Archive
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: python3-cyberradiodriver-jammy
         path: ./*.deb
@@ -46,7 +46,7 @@ jobs:
     - name: Build and Package
       run: ./makedeb cyberradiodriver
     - name: Save Debian Archive
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: python3-cyberradiodriver-focal
         path: ./*.deb
@@ -61,7 +61,7 @@ jobs:
     - name: Build and Package
       run: ./makedeb -3 cyberradiodriver
     - name: Save Debian Archive
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: python3-cyberradiodriver-bionic
         path: ./*.deb
@@ -76,7 +76,7 @@ jobs:
     - name: Build and Package
       run: ./makedeb -2 cyberradiodriver
     - name: Save Debian Archive
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: python3-cyberradiodriver-bionic
         path: ./*.deb2

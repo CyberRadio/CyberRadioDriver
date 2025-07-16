@@ -1574,6 +1574,77 @@ class ndr358_resampler_wbddc(ndr358_wbddc):
             configKeys.DDC_DGC_DECAY_TRIGGER,
         ]
 
+class nbddc358_9_resampler(_jsonCommandBase):
+    mnemonic = "nbddc"
+    queryParamMap = {
+                configKeys.INDEX: "id",
+                configKeys.DDC_RF_INDEX: "rfch",
+                configKeys.DDC_FREQUENCY_OFFSET: "offset",
+                configKeys.DDC_CIC0: "cic0",
+                configKeys.DDC_CIC1: "cic1",
+                configKeys.DDC_RATE_INDEX: "filter",
+                configKeys.DDC_OVERSAMPLING: "ovs",
+                configKeys.DDC_DEMOD_TYPE: "demod",
+                configKeys.DDC_DEMOD_GAIN: "dmdgain",
+                #configKeys.DDC_AUDIO_DECIMATION: "audiodec",
+                configKeys.DDC_AUDIO_DECIMATION: "audio",
+                configKeys.DDC_BEAT_FREQ_OSC: "bfo",
+                configKeys.ENABLE: "enable",
+                configKeys.DDC_START_TIME: "start",
+                configKeys.DDC_SAMPLES: "samples",
+                configKeys.DDC_GROUP_ID: "gddcid",
+                configKeys.DDC_STREAM_ID: "vita",
+                configKeys.DDC_UDP_DESTINATION: "dest",
+                configKeys.DDC_LINK: "link",
+                configKeys.DDC_DGC_MODE: "mode",
+                configKeys.DDC_DGC_GAIN: "dgv",
+                configKeys.DDC_DGC_UPPER_LIMIT: "dul",
+                configKeys.DDC_DGC_LOWER_LIMIT: "dll",
+                configKeys.DDC_DGC_TARGET_RANGE: "dtl",
+                configKeys.DDC_DGC_ATTACK_LIMIT: "dal",
+                configKeys.DDC_DGC_DECAY_LIMIT: "ddl",
+                configKeys.DDC_DGC_ATTACK_OFFSET: "dao",
+                configKeys.DDC_DGC_DECAY_OFFSET: "ddo",
+                configKeys.DDC_DGC_ATTACK_TIME: "datc",
+                configKeys.DDC_DGC_DECAY_TIME: "ddtc",
+                configKeys.DDC_DGC_ATTACK_TRIGGER: "dat",
+                configKeys.DDC_DGC_DECAY_TRIGGER: "ddt",
+                }
+    setParamMap = {
+                configKeys.INDEX: "id",
+                configKeys.DDC_RF_INDEX: "rfch",
+                configKeys.DDC_FREQUENCY_OFFSET: "offset",
+                configKeys.DDC_CIC0: "cic0",
+                configKeys.DDC_CIC1: "cic1",
+                configKeys.DDC_RATE_INDEX: "filter",
+                configKeys.DDC_OVERSAMPLING: "ovs",
+                configKeys.DDC_DEMOD_TYPE: "demod",
+                configKeys.DDC_DEMOD_GAIN: "dmdgain",
+                #configKeys.DDC_AUDIO_DECIMATION: "audiodec",
+                configKeys.DDC_AUDIO_DECIMATION: "audio",
+                configKeys.DDC_BEAT_FREQ_OSC: "bfo",
+                configKeys.ENABLE: "enable",
+                configKeys.DDC_START_TIME: "start",
+                configKeys.DDC_SAMPLES: "samples",
+                configKeys.DDC_GROUP_ID: "gddcid",
+                configKeys.DDC_STREAM_ID: "vita",
+                configKeys.DDC_UDP_DESTINATION: "dest",
+                configKeys.DDC_LINK: "link",
+                configKeys.DDC_DGC_MODE: "mode",
+                configKeys.DDC_DGC_GAIN: "dgv",
+                configKeys.DDC_DGC_UPPER_LIMIT: "dul",
+                configKeys.DDC_DGC_LOWER_LIMIT: "dll",
+                configKeys.DDC_DGC_TARGET_RANGE: "dtl",
+                configKeys.DDC_DGC_ATTACK_LIMIT: "dal",
+                configKeys.DDC_DGC_DECAY_LIMIT: "ddl",
+                configKeys.DDC_DGC_ATTACK_OFFSET: "dao",
+                configKeys.DDC_DGC_DECAY_OFFSET: "ddo",
+                configKeys.DDC_DGC_ATTACK_TIME: "datc",
+                configKeys.DDC_DGC_DECAY_TIME: "ddtc",
+                configKeys.DDC_DGC_ATTACK_TRIGGER: "dat",
+                configKeys.DDC_DGC_DECAY_TRIGGER: "ddt",
+                }
+
 ##
 # \brief WBDDC component class for the NDR358 Resampler variant.
 class ndr358_resampler_nbddc(ndr358_nbddc):
@@ -1589,6 +1660,98 @@ class ndr358_resampler_nbddc(ndr358_nbddc):
             18: 10e6,
             19: 20e6,
         }
+    tunable = True
+    selectableSource = True
+    frqRange = (-40e6,40e6)
+    frqRes = 1
+    dataFormat = { 1:"iq" }
+    cfgCmd = nbddc358_9_resampler
+    frqCmd = None
+    nbssCmd = None
+    # OVERRIDE
+    validConfigurationKeywords = [
+                                configKeys.DDC_RF_INDEX,
+                                configKeys.DDC_FREQUENCY_OFFSET,
+                                configKeys.DDC_CIC0,
+                                configKeys.DDC_CIC1,
+                                configKeys.DDC_RATE_INDEX,
+                                configKeys.DDC_OVERSAMPLING,
+                                configKeys.DDC_DEMOD_TYPE,
+                                configKeys.DDC_DEMOD_GAIN,
+                                configKeys.DDC_AUDIO_DECIMATION,
+                                configKeys.DDC_BEAT_FREQ_OSC,
+                                configKeys.ENABLE,
+                                configKeys.DDC_START_TIME,
+                                configKeys.DDC_SAMPLES,
+                                configKeys.DDC_GROUP_ID,
+                                configKeys.DDC_STREAM_ID,
+                                configKeys.DDC_UDP_DESTINATION,
+                                configKeys.DDC_LINK,
+                                configKeys.DDC_DGC_MODE,
+                                configKeys.DDC_DGC_GAIN,
+                                configKeys.DDC_DGC_UPPER_LIMIT,
+                                configKeys.DDC_DGC_LOWER_LIMIT,
+                                configKeys.DDC_DGC_TARGET_RANGE,
+                                configKeys.DDC_DGC_ATTACK_LIMIT,
+                                configKeys.DDC_DGC_DECAY_LIMIT,
+                                configKeys.DDC_DGC_ATTACK_OFFSET,
+                                configKeys.DDC_DGC_DECAY_OFFSET,
+                                configKeys.DDC_DGC_ATTACK_TIME,
+                                configKeys.DDC_DGC_DECAY_TIME,
+                                configKeys.DDC_DGC_ATTACK_TRIGGER,
+                                configKeys.DDC_DGC_DECAY_TRIGGER,
+                                  ]
+    
+    # OVERRIDE
+    ##
+    # \protected
+    # Queries hardware to determine the object's current configuration.  
+    def _queryConfiguration(self):
+        # Call the base-class implementation
+        configKeys.Configurable._queryConfiguration(self)
+        # Override
+        if self.cfgCmd is not None:
+            cmd = self.cfgCmd(**{ "parent": self, 
+                                   configKeys.INDEX: self.index,
+                                   "query": True,
+                                    "verbose": self.verbose, 
+                                    "logFile": self.logFile })
+            cmd.send( self.callback, )
+            self._addLastCommandErrorInfo(cmd)
+            rspInfo = cmd.getResponseInfo()
+            #self.logIfVerbose("rspInfo =", rspInfo)
+            if rspInfo is not None:
+                for key in self.validConfigurationKeywords:
+                    if key in rspInfo:
+                        self.configuration[key] = rspInfo.get(key, None)
+        pass
+
+    # OVERRIDE
+    ##
+    # \protected
+    # Issues hardware commands to set the object's current configuration.  
+    def _setConfiguration(self, confDict):
+        ret = True
+        keys = self.validConfigurationKeywords
+        if any([q in confDict for q in keys]):
+            if self.cfgCmd is not None:
+                cDict = {}
+                self._dictUpdate(cDict, confDict, {}, keys)
+                cDict.update({ "parent": self, 
+                                configKeys.INDEX: self.index,
+                                 "verbose": self.verbose, 
+                                 "logFile": self.logFile })
+                cmd = self.cfgCmd(**cDict)
+                ret &= cmd.send( self.callback, )
+                ret &= cmd.success
+                self._addLastCommandErrorInfo(cmd)
+                if ret:
+                    for key in keys:
+                        if key in confDict:
+                            self.configuration[key] = confDict[key]
+                pass
+        return ret
+
 
 ##
 # Reference mode command specific to the NDR551.

@@ -1652,7 +1652,7 @@ class ndr358_resampler_nbddc(ndr358_nbddc):
     # OVERRIDES
     rateSet = {
             17: 6.25e6,
-            18: 12.25e6,
+            18: 12.5e6,
             19: 25e6,
         }
     bwSet = {
